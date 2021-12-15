@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/authsystem.iml" filepath="$PROJECT_DIR$/.idea/modules/authsystem.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/auth-server/authsystem.auth-server.iml" filepath="$PROJECT_DIR$/.idea/modules/auth-server/authsystem.auth-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/auth-server/authsystem.auth-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/auth-server/authsystem.auth-server.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/auth-server/authsystem.auth-server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/auth-server/authsystem.auth-server.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/frontend/authsystem.frontend.iml" filepath="$PROJECT_DIR$/.idea/modules/frontend/authsystem.frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/frontend/authsystem.frontend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/frontend/authsystem.frontend.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/frontend/authsystem.frontend.test.iml" filepath="$PROJECT_DIR$/.idea/modules/frontend/authsystem.frontend.test.iml" />
+    </modules>
+  </component>
+</project>
