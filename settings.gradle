@@ -1,3 +1,4 @@
 rootProject.name = 'authsystem'
 include 'auth-server'
+include 'discovery-server'
 include 'frontend'
