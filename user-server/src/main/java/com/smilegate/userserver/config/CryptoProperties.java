@@ -1,14 +1,15 @@
-package com.smilegate.userserver.utils;
+package com.smilegate.userserver.config;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
-//@ConfigurationProperties(prefix = "crypto")
 @Component
+//@ConfigurationProperties(prefix = "crypto")
 public class CryptoProperties {
     @Value("${crypto.transformation}")
     private String transformation;

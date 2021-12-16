@@ -1,8 +1,8 @@
-package com.smilegate.userserver.service;
+package com.smilegate.userserver.utils;
 
-import com.smilegate.userserver.utils.CryptoProperties;
+import com.smilegate.userserver.config.CryptoProperties;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -16,9 +16,9 @@ import java.security.AlgorithmParameters;
 import java.security.SecureRandom;
 import java.util.Base64;
 
-@Service
+@Component
 @RequiredArgsConstructor
-public class CryptoService {
+public class CryptoUtils {
     public final CryptoProperties cryptoProperties;
 
     public String encrypt(String str) throws Exception {
