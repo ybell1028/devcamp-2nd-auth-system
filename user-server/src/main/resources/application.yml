@@ -4,6 +4,20 @@ server:
 spring:
   application:
     name: user-service
+  datasource:
+    url: jdbc:h2:mem:testdb
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+    properties:
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      hibernate:
+        format_sql: true
 
 eureka:
   instance:
