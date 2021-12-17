@@ -1,5 +1,6 @@
 package com.smilegate.userserver.service;
 
+import com.fasterxml.uuid.Generators;
 import com.smilegate.userserver.dto.RegisterRequest;
 import com.smilegate.userserver.entity.User;
 import com.smilegate.userserver.repository.UserRepository;
@@ -21,6 +22,7 @@ public class UserService {
         User user = User.builder()
                 .name(registerRequest.getName())
                 .email(registerRequest.getEmail())
+                .uuid(Generators.timeBasedGenerator().generate())
                 .password(cryptoUtils.encrypt(registerRequest.getPassword()))
                 .build();
         return userRepository.save(user);

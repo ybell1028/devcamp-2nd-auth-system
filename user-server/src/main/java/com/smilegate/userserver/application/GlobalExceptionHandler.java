@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(new UserServerResponse<>(HttpStatus.BAD_REQUEST, e.getMessage()));
+                .body(new UserServerResponse<>(HttpStatus.BAD_REQUEST, errorMessage));
     }
 
     @ExceptionHandler(RuntimeException.class)
