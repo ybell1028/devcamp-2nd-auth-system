@@ -3,7 +3,6 @@ package com.smilegate.userserver.config;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 @Getter
@@ -13,8 +12,12 @@ import org.springframework.stereotype.Component;
 public class CryptoProperties {
     @Value("${crypto.transformation}")
     private String transformation;
-    @Value("${crypto.length}")
-    private int length;
+    @Value("${crypto.saltlength}")
+    private int saltlength;
+    @Value("${crypto.keylength}")
+    private int keylength;
+    @Value("${crypto.iteration}")
+    private int iteration;
     @Value("${crypto.key}")
     private String key;
     @Value("${crypto.algorithm.secretkeyfactory}")

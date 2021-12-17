@@ -23,12 +23,12 @@ public class CryptoUtils {
 
     public String encrypt(String str) throws Exception {
         SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[cryptoProperties.getLength()];
+        byte[] salt = new byte[cryptoProperties.getSaltlength()];
         random.nextBytes(salt);
 
         SecretKeyFactory factory = SecretKeyFactory.getInstance(cryptoProperties.getSkfAlg());
         // key에 랜덤 salt를 더하고 20000번 해시하여 256bit 길이의 PBEKeySpec 생성
-        PBEKeySpec pbeKeySpec = new PBEKeySpec(cryptoProperties.getKey().toCharArray(), salt, 20000, 256);
+        PBEKeySpec pbeKeySpec = new PBEKeySpec(cryptoProperties.getKey().toCharArray(), salt, cryptoProperties.getIteration(), cryptoProperties.getKeylength());
         SecretKey secretKey = factory.generateSecret(pbeKeySpec); // 윗 라인에서 생성한 키로 secretKey 생성
         SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getEncoded(), cryptoProperties.getSksAlg());
 
@@ -52,7 +52,7 @@ public class CryptoUtils {
         Cipher cipher = Cipher.getInstance(cryptoProperties.getTransformation());
         ByteBuffer buffer = ByteBuffer.wrap(Base64.getDecoder().decode(str));
 
-        byte[] salt = new byte[cryptoProperties.getLength()];
+        byte[] salt = new byte[cryptoProperties.getSaltlength()];
         buffer.get(salt, 0, salt.length);
         byte[] iv = new byte[cipher.getBlockSize()];
         buffer.get(iv, 0, iv.length);
@@ -60,7 +60,7 @@ public class CryptoUtils {
         buffer.get(encryptedText);
 
         SecretKeyFactory factory = SecretKeyFactory.getInstance(cryptoProperties.getSkfAlg());
-        PBEKeySpec pbeKeySpec = new PBEKeySpec(cryptoProperties.getKey().toCharArray(), salt, 20000, 256);
+        PBEKeySpec pbeKeySpec = new PBEKeySpec(cryptoProperties.getKey().toCharArray(), salt, cryptoProperties.getIteration(), cryptoProperties.getKeylength());
         SecretKey secretKey = factory.generateSecret(pbeKeySpec);
         SecretKeySpec secretKetSpec = new SecretKeySpec(secretKey.getEncoded(), cryptoProperties.getSksAlg());
 
