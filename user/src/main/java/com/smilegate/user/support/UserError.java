@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public enum UserServerError {
+public enum UserError {
     UNKNOWN_ERROR("알 수 없는 에러입니다.", HttpStatus.INTERNAL_SERVER_ERROR),
     NOT_LOGIN("로그인 하지 않은 사용자입니다.", HttpStatus.UNAUTHORIZED),
     BAD_REQUEST("사용자의 입력이 잘못되었습니다.", HttpStatus.BAD_REQUEST),
@@ -15,7 +15,7 @@ public enum UserServerError {
     private final String desc;
     private final HttpStatus status;
 
-    UserServerError(String desc, HttpStatus status) {
+    UserError(String desc, HttpStatus status) {
         this.desc = desc;
         this.status = status;
     }

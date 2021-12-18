@@ -15,12 +15,21 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: user-service
+        - id: user-service/register
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/user/**
+            - Path=/user/register
           filters:
             - RewritePath=/user/?(?<segment>.*), /$\{segment}
+
+        - id: user-service/admin
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user/admin/**
+          filters:
+            - RewritePath=/user/?(?<segment>.*), /$\{segment}
+            - JwtAuthenticationFilter
+
         - id: auth-service
           uri: lb://AUTH-SERVICE
           predicates:
@@ -29,6 +38,6 @@ spring:
             - RewritePath=/auth/?(?<segment>.*), /$\{segment}
 
 jwt:
-  secret: jsonsecretkey
+  secret: jsonsecretkeyjsonsecretkeyjsonsecretkeyjsonsecretkeyjsonsecretkeyjsonsecretkeyjsonsecretkeyjsonsecretkeyjsonsecretkeyjsonsecretkeyjsonsecretkeyjsonsecretkeyjsonsecretkey
   token:
     validity: 3600000
