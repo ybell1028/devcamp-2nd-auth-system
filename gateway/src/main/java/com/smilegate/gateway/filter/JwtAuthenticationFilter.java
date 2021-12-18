@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
 
             jwtUtil.validateToken(tokenString);
 
-            return chain.filter(exchange); // 토큰이 일치한다면
+            return chain.filter(exchange);
         });
     }
 
