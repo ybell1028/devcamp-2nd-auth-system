@@ -40,9 +40,8 @@ public class JwtUtil {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
-            System.out.println(e.getMessage() + " => " + e);
+            throw new GatewayException(GatewayError.JSON_PARSE_ERROR);
         }
-        return null;
     }
 
     @Bean

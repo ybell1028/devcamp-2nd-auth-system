@@ -1,7 +1,6 @@
 package com.smilegate.auth.controller;
 
-import com.smilegate.auth.dto.LoginRequest;
-import com.smilegate.auth.dto.LoginResponse;
+import com.smilegate.auth.dto.*;
 import com.smilegate.auth.entity.User;
 import com.smilegate.auth.service.TokenService;
 import com.smilegate.auth.service.UserService;
@@ -26,6 +25,15 @@ public class AuthController {
     private final TokenService tokenService;
     private final CryptoUtils cryptoUtils;
 
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponse<?>> register(@RequestBody @Valid RegisterRequest registerRequest) throws Exception {
+        User registeredUser = userService.register(registerRequest);
+        RegisterResponse registerResponse = RegisterResponse.toDto(registeredUser);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new AuthResponse<>(registerResponse, HttpStatus.CREATED));
+    }
+
     @PostMapping("/login")
     public ResponseEntity<AuthResponse<?>> login(@RequestBody @Valid LoginRequest loginRequest) throws Exception {
         User user = userService.findByEmail(loginRequest.getEmail());
@@ -37,5 +45,15 @@ public class AuthController {
         } else {
             throw new AuthException(AuthError.BAD_REQUEST, "비밀번호가 틀립니다.");
         }
+    }
+
+    // 복호화 테스트용 API
+    @PostMapping("/find")
+    public  ResponseEntity<AuthResponse<?>> findPassword(@RequestBody FindPasswordRequest findPasswordRequest) throws Exception {
+        String decrypted = userService.findPassword(findPasswordRequest.getEncrypted());
+        FindPasswordResponse findPasswordResponse = FindPasswordResponse.toDto(decrypted);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new AuthResponse<>(findPasswordResponse));
     }
 }
