@@ -1,6 +1,6 @@
-package com.smilegate.user.dto;
+package com.smilegate.auth.dto;
 
-import com.smilegate.user.entity.User;
+import com.smilegate.auth.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
