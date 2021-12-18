@@ -1,4 +1,4 @@
-package com.example.gateway.support;
+package com.smilegate.gateway.support;
 
 import lombok.Getter;
 

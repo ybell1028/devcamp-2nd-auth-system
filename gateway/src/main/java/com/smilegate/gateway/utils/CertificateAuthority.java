@@ -1,7 +1,7 @@
-package com.example.gateway.utils;
+package com.smilegate.gateway.utils;
 
-import com.example.gateway.support.GatewayError;
-import com.example.gateway.support.GatewayException;
+import com.smilegate.gateway.support.GatewayError;
+import com.smilegate.gateway.support.GatewayException;
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

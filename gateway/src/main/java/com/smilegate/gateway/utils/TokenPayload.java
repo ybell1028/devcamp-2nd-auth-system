@@ -1,4 +1,4 @@
-package com.example.gateway.utils;
+package com.smilegate.gateway.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

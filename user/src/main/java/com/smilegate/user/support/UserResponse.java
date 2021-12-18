@@ -8,25 +8,25 @@ import org.springframework.http.HttpStatus;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @Getter
-public class UserServerResponse<T> {
+public class UserResponse<T> {
     private T data;
     private HttpStatus status;
     private int statusCode;
     private String message;
 
-    public UserServerResponse(T data) {
+    public UserResponse(T data) {
         this.data = data;
         this.status = HttpStatus.OK;
         this.statusCode = 200;
     }
 
-    public UserServerResponse(T data, HttpStatus status) {
+    public UserResponse(T data, HttpStatus status) {
         this.data = data;
         this.status = status;
         this.statusCode = status.value();
     }
 
-    public UserServerResponse(HttpStatus status, String message) {
+    public UserResponse(HttpStatus status, String message) {
         this.status = status;
         this.message = message;
         this.statusCode = status.value();
