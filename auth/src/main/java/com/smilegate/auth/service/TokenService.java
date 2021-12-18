@@ -44,17 +44,4 @@ public class TokenService {
             throw new AuthException(AuthError.JSON_PARSE_ERROR, e);
         }
     }
-
-    public Claims getClaims(final String token) {
-        try {
-            return Jwts.parserBuilder()
-                    .setSigningKey(DatatypeConverter.parseBase64Binary(jwtSecret))
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody();
-        } catch (Exception e) {
-            System.out.println(e.getMessage() + " => " + e);
-        }
-        return null;
-    }
 }
