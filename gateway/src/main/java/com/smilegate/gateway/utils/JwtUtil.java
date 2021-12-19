@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.MediaType;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
@@ -17,12 +19,15 @@ import reactor.core.publisher.Mono;
 
 import javax.xml.bind.DatatypeConverter;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
 @Component
 public class JwtUtil {
     private static String jwtSecret;
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Value("${jwt.secret}")
     public void setJwtSecret(String jwtSecret) {
@@ -39,22 +44,24 @@ public class JwtUtil {
             Map<String, Object> payload = objectMapper.readValue(claims.getSubject(), Map.class);
             return payload;
         } catch (JacksonException e) {
-            throw new GatewayException(GatewayError.JSON_PARSE_ERROR, e.getMessage());
+            throw new GatewayException(GatewayError.JSON_PARSE_ERROR, e);
         }
     }
 
     public static class JwtWebExceptionHandler implements ErrorWebExceptionHandler {
-        // ModifyResponseBodyGatewayFilterFactory로 변경할 것
         private String makeJson(GatewayError gatewayError, String message) {
             return String.format("{ \"status\" : \"%s\", \"statusCode\" : \"%s\", \"message\" : \"%s\"" ,
                     gatewayError.getStatus(),
                     gatewayError.getStatus().value(),
-                    gatewayError.getDesc() + " : " + message
+                    gatewayError.getDesc() + " : " + message + " }"
             );
         }
+
+
         @Override
         public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
             log.warn("JwtWebExceptionHandler : " + ex);
+
             String message = "";
             if (ex.getClass() == ExpiredJwtException.class) {
                 message = "만료된 토큰입니다.";
@@ -67,7 +74,9 @@ public class JwtUtil {
             }
 
             byte[] bytes = makeJson(GatewayError.JWT_AUTHENTICATION, message).getBytes(StandardCharsets.UTF_8);
-            DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
+            ServerHttpResponse response = exchange.getResponse();
+            response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+            DataBuffer buffer = response.bufferFactory().wrap(bytes);
             return exchange.getResponse().writeWith(Flux.just(buffer));
         }
     }

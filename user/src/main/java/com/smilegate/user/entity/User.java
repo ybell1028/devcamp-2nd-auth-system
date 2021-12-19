@@ -20,7 +20,7 @@ public class User extends BaseTime {
     @Column(name="id", nullable = false)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, columnDefinition = "BINARY(16)")
     private UUID uuid;
 
     @Column(length = 20, nullable = false)
@@ -31,4 +31,8 @@ public class User extends BaseTime {
 
     @Column(length = 64, nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 }

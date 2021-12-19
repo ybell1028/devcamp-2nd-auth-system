@@ -1,4 +1,4 @@
-package com.smilegate.auth.support;
+package com.smilegate.user.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

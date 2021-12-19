@@ -12,8 +12,4 @@ import java.util.UUID;
 public class TokenPayload {
     private UUID uuid;
     private String email;
-
-    public boolean isSame(TokenPayload anotherTokenPayload) {
-        return uuid == anotherTokenPayload.getUuid() && email == anotherTokenPayload.getEmail();
-    }
 }

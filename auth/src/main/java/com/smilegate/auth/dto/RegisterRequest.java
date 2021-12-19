@@ -10,8 +10,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class RegisterRequest {
     @NotBlank(message = "이름은 필수값 입니다.")
     @Length(max = 16, message = "이름은 최대 16자 까지 입니다.")

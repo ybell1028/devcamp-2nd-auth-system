@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class RegisterResponse {
     private String name;
     private String email;

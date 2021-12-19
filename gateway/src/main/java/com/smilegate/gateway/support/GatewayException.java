@@ -7,17 +7,17 @@ public class GatewayException extends RuntimeException {
     private final GatewayError error;
 
     public GatewayException(GatewayError error) {
-        super(error.getDesc());
+        super("GatewayExeption - " + error.getDesc());
         this.error = error;
     }
 
     public GatewayException(GatewayError error, String message) {
-        super(error.getDesc() + " : " + message);
+        super("GatewayExeption - " + error.getDesc() + " : " + message);
         this.error = error;
     }
 
     public GatewayException(GatewayError error, Throwable cause) {
-        super(error.getDesc(), cause);
+        super("GatewayExeption - " + error.getDesc(), cause);
         this.error = error;
     }
 }

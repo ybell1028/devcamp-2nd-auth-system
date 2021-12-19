@@ -7,17 +7,17 @@ public class AuthException extends RuntimeException {
     private final AuthError error;
 
     public AuthException(AuthError error) {
-        super(error.getDesc());
+        super("AuthException - " + error.getDesc());
         this.error = error;
     }
 
     public AuthException(AuthError error, String message) {
-        super(error.getDesc() + " : " + message);
+        super("AuthException - " + error.getDesc() + " : " + message);
         this.error = error;
     }
 
     public AuthException(AuthError error, Throwable cause) {
-        super(error.getDesc(), cause);
+        super("AuthException - " + error.getDesc(), cause);
         this.error = error;
     }
 }

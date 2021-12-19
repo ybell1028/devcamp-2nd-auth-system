@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpHeaders;
 import org.apache.http.entity.ContentType;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -44,7 +43,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
         return ((exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
 
-            List<String> list = request.getHeaders().get(HttpHeaders.AUTHORIZATION);
+            List<String> list = request.getHeaders().get("x-access-token");
             String token = Objects.requireNonNull(list).get(0);
             
             //to-be token payload 추출해서 request json에 추가
