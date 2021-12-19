@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smilegate.auth.support.AuthError;
 import com.smilegate.auth.support.AuthException;
 import com.smilegate.auth.support.TokenPayload;
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,21 +20,21 @@ public class TokenService {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
-    @Value("${jwt.token.validity}")
-    private long tokenValidity;
+    @Value("${jwt.token.exp}")
+    private long exp;
 
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public String makeToken(TokenPayload payload) {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         byte[] secretKeyBytes = DatatypeConverter.parseBase64Binary(jwtSecret);
         Key signingKey = new SecretKeySpec(secretKeyBytes, signatureAlgorithm.getJcaName());
         long nowMillis = System.currentTimeMillis();
-        long expMillis = nowMillis + tokenValidity;
+        long expMillis = nowMillis + exp;
         Date exp = new Date(expMillis);
         try {
             return Jwts.builder()
-                    .setSubject(mapper.writeValueAsString(payload))
+                    .setSubject(objectMapper.writeValueAsString(payload))
                     .setIssuedAt(new Date(nowMillis))
                     .setExpiration(exp)
                     .signWith(signingKey, signatureAlgorithm)
@@ -43,18 +42,5 @@ public class TokenService {
         } catch (JsonProcessingException e) {
             throw new AuthException(AuthError.JSON_PARSE_ERROR, e);
         }
-    }
-
-    public Claims getClaims(final String token) {
-        try {
-            return Jwts.parserBuilder()
-                    .setSigningKey(DatatypeConverter.parseBase64Binary(jwtSecret))
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody();
-        } catch (Exception e) {
-            System.out.println(e.getMessage() + " => " + e);
-        }
-        return null;
     }
 }

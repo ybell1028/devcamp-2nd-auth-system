@@ -8,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Getter
-
 public class LoginRequest {
     @NotBlank(message = "이메일은 필수값 입니다.")
     @Length(max = 32, message = "이메일은 최대 32자 까지 입니다.")
