@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2>회원 관리 페이지</h2>
+    </div>
+
+    <table id="userTable" class="table table-hover">
+        <thead>
+        <tr>
+            <th>이메일</th>
+            <th>등급</th>
+            <th>UUID</th>
+            <th>이름</th>
+            <th>생성일자</th>
+            <th>수정일자</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${userList}">
+            <td th:text="${user.email}">email</td>
+            <td th:text="${user.role}">role</td>
+            <td th:text="${user.uuid}">uuid</td>
+            <td th:text="${user.name}">name</td>
+            <td th:text="${user.createdAt}">createdAt</td>
+            <td th:text="${user.modifiedAt}">modifiedAt</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div> <!-- /container -->
+</body>
+</html>
