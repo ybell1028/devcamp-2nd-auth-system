@@ -3,7 +3,7 @@ package com.smilegate.auth.service;
 import com.fasterxml.uuid.Generators;
 import com.smilegate.auth.dto.LoginRequest;
 import com.smilegate.auth.dto.RegisterRequest;
-import com.smilegate.auth.entity.Confirm;
+import com.smilegate.auth.entity.Confirmation;
 import com.smilegate.auth.entity.Role;
 import com.smilegate.auth.entity.User;
 import com.smilegate.auth.repository.UserRepository;
@@ -24,7 +24,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final CryptoUtils cryptoUtils;
     private final TokenService tokenService;
-    private final ConfirmService confirmService;
+    private final ConfirmationService confirmationService;
 
     @Transactional
     public User register(RegisterRequest registerRequest) {
@@ -84,10 +84,10 @@ public class UserService {
     }
 
     @Transactional
-    public void confirmEmail(UUID confirmId) {
-        Confirm confirm = confirmService.findByIdAndExpirationDateAfterAndExpired(confirmId);
-        User user = findByUuid(confirm.getUserUuid());
-        confirm.useToken();
+    public void confirmEmail(UUID confirmationId) {
+        Confirmation confirmation = confirmationService.findByIdAndExpirationDateAfterAndExpired(confirmationId);
+        User user = findByUuid(confirmation.getUserUuid());
+        confirmation.useToken();
         user.modifyRole(Role.REGULAR);
     }
 }

@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Confirm extends BaseTime {
+public class Confirmation extends BaseTime {
     private static final long CONFIRM_EXPIRATION_MINUTE = 5L;
 
     @Id
@@ -33,8 +33,8 @@ public class Confirm extends BaseTime {
     @Column(nullable = false)
     private LocalDateTime expirationDate;
 
-    public static Confirm makeConfirm(UUID userUuid){
-        return Confirm.builder()
+    public static Confirmation makeConfirm(UUID userUuid){
+        return Confirmation.builder()
                 .userUuid(userUuid)
                 .expired(false)
                 .expirationDate(LocalDateTime.now().plusMinutes(CONFIRM_EXPIRATION_MINUTE))
