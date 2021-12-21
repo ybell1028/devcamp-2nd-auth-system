@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smilegate.gateway.support.GatewayError;
 import com.smilegate.gateway.support.GatewayException;
-import com.smilegate.gateway.utils.JwtUtil;
+import com.smilegate.gateway.utils.JwtUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
 
     @Bean
     public ErrorWebExceptionHandler jwtWebExceptionHandler() {
-        return new JwtUtil.JwtWebExceptionHandler();
+        return new JwtUtils.JwtWebExceptionHandler();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
             String token = Objects.requireNonNull(list).get(0);
             
             //to-be token payload 추출해서 request json에 추가
-            Map<String, Object> payload = JwtUtil.getPayloadFromToken(token, objectMapper);
+            Map<String, Object> payload = JwtUtils.getPayloadFromToken(token, objectMapper);
 
             try {
                 String newRequestBody = objectMapper.writeValueAsString(payload); // non-blocking으로 개선 필요

@@ -1,6 +1,6 @@
-package com.smilegate.auth.repository;
+package com.smilegate.user.repository;
 
-import com.smilegate.auth.entity.Confirmation;
+import com.smilegate.user.entity.Confirmation;
 import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalDateTime;

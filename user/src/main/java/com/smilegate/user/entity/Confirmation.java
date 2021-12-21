@@ -1,4 +1,4 @@
-package com.smilegate.auth.entity;
+package com.smilegate.user.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;

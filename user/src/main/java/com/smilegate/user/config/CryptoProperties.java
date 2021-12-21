@@ -1,4 +1,4 @@
-package com.smilegate.auth.config;
+package com.smilegate.user.config;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,9 +1,9 @@
-package com.smilegate.auth.service;
+package com.smilegate.user.service;
 
-import com.smilegate.auth.entity.Confirmation;
-import com.smilegate.auth.repository.ConfirmationRepository;
-import com.smilegate.auth.support.AuthError;
-import com.smilegate.auth.support.AuthException;
+import com.smilegate.user.entity.Confirmation;
+import com.smilegate.user.repository.ConfirmationRepository;
+import com.smilegate.user.support.UserError;
+import com.smilegate.user.support.UserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -35,7 +35,7 @@ public class ConfirmationService {
 
     @Transactional
     @Async("mailExecutor") // 같이 쓰면 주의해야할 점에 대해 알아보자
-    public void sendConfirm(UUID userUuid, String receiver){
+    public void sendConfirmation(UUID userUuid, String receiver){
         Confirmation emailConfirmation = Confirmation.makeConfirm(userUuid);
         confirmationRepository.save(emailConfirmation);
 
@@ -44,9 +44,10 @@ public class ConfirmationService {
         String link = String.format("<a href=\"http://localhost:8000/auth/confirmation?sign=%s\">----> 링크를 눌러서 인증을 완료해주세요. <----</a>", emailConfirmation.getId());
         this.sendMail(receiver, subject, link);
     }
-    
+
+    @Transactional(readOnly = true)
     public Confirmation findByIdAndExpirationDateAfterAndExpired(UUID confirmationId){
         return confirmationRepository.findByIdAndExpirationDateAfterAndExpired(confirmationId, LocalDateTime.now(),false)
-                .orElseThrow(()-> new AuthException(AuthError.BAD_REQUEST, "이메일 인증 토큰을 찾을 수 없습니다."));
+                .orElseThrow(()-> new UserException(UserError.BAD_REQUEST, "이메일 인증 토큰을 찾을 수 없습니다."));
     };
 }

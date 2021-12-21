@@ -1,6 +1,6 @@
-package com.smilegate.auth.utils;
+package com.smilegate.user.utils;
 
-import com.smilegate.auth.config.CryptoProperties;
+import com.smilegate.user.config.CryptoProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +20,33 @@ import java.util.Base64;
 @RequiredArgsConstructor
 public class CryptoUtils {
     public final CryptoProperties cryptoProperties;
+
+    public String encrypt(String str) throws Exception {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[cryptoProperties.getSaltlength()];
+        random.nextBytes(salt);
+
+        SecretKeyFactory factory = SecretKeyFactory.getInstance(cryptoProperties.getSkfAlg());
+        // key에 랜덤 salt를 더하고 20000번 해시하여 256bit 길이의 PBEKeySpec 생성
+        PBEKeySpec pbeKeySpec = new PBEKeySpec(cryptoProperties.getKey().toCharArray(), salt, cryptoProperties.getIteration(), cryptoProperties.getKeylength());
+        SecretKey secretKey = factory.generateSecret(pbeKeySpec); // 윗 라인에서 생성한 키로 secretKey 생성
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getEncoded(), cryptoProperties.getSksAlg());
+
+        Cipher cipher = Cipher.getInstance(cryptoProperties.getTransformation());
+        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec); // 위에서 생성한 secret으로 CBC
+        AlgorithmParameters params = cipher.getParameters();
+
+        // Initialization Vector
+        byte[] iv = params.getParameterSpec(IvParameterSpec.class).getIV();
+        byte[] encryptedText = cipher.doFinal(str.getBytes(StandardCharsets.UTF_8));
+        byte[] buffer = new byte[salt.length + iv.length + encryptedText.length];
+
+        System.arraycopy(salt, 0, buffer, 0, salt.length);
+        System.arraycopy(iv, 0, buffer, salt.length, iv.length);
+        System.arraycopy(encryptedText, 0, buffer, salt.length + iv.length, encryptedText.length);
+
+        return Base64.getEncoder().encodeToString(buffer);
+    }
 
     public String decrypt(String str) throws Exception {
         Cipher cipher = Cipher.getInstance(cryptoProperties.getTransformation());
