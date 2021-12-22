@@ -21,13 +21,13 @@ const main = {
             };
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8000/auth/register",
+                url: "http://localhost:8000/user",
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(data),
             }).done((data) => {
                 alert(data.name + "님! 회원가입을 축하드립니다!");
-                window.location.href = 'http://localhost:8090'; // 리다이렉트
+                window.location.href = "http://localhost:8090/verification/" + data.email; // 리다이렉트
             }).fail((error) => {
                 const errorArr = error.responseJSON.message.split(":");
                 if(errorArr.length < 2) {

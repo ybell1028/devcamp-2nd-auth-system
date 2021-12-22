@@ -23,12 +23,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final ConfirmationService confirmationService;
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid RegisterRequest registerRequest) throws Exception {
         User registeredUser = userService.register(registerRequest);
-        confirmationService.sendConfirmation(registeredUser.getUuid(), registeredUser.getEmail());
         RegisterResponse registerResponse = RegisterResponse.toDto(registeredUser);
 
         return new ResponseEntity<>(registerResponse, HttpStatus.CREATED);

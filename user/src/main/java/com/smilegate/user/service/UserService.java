@@ -49,7 +49,9 @@ public class UserService {
                 .password(encryted)
                 .role(Role.ASSOCIATE)
                 .build();
-        return userRepository.save(user);
+        userRepository.save(user);
+        confirmationService.sendConfirmation(user.getUuid(), user.getEmail());
+        return user;
     }
 
     @Transactional(readOnly = true)
@@ -80,6 +82,6 @@ public class UserService {
         Confirmation confirmation = confirmationService.findByIdAndExpirationDateAfterAndExpired(confirmationId);
         User user = findByUuid(confirmation.getUserUuid());
         confirmation.useToken();
-        user.modifyRole(Role.REGULAR);
+        user.modifyRole(Role.ADMIN);
     }
 }

@@ -36,10 +36,9 @@ const main = {
             console.log(errorArr);
         });
     },
-    inquiry: () => {
+    toAdminPage: () => {
         let data = {
-            email: $("#email").val(),
-            password: $("#password").val(),
+            token: localStorage.getItem("accessToken"),
         };
         $.ajax({
             type: "POST",
@@ -48,7 +47,7 @@ const main = {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
         }).done((data) => {
-            localStorage.setItem("token", data.token);
+
             console.log(data.token);
             alert(data.token);
         }).fail((error) => {
