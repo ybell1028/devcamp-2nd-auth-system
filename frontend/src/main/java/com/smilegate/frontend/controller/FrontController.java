@@ -37,8 +37,12 @@ public class FrontController {
 
     @GetMapping("/confirmation")
     public String confirmation(@RequestParam String sign) {
-        System.out.println(sign);
         return "/confirmation";
+    }
+
+    @GetMapping("/admin")
+    public String admin() {
+        return "/adminPage";
     }
 
 //    @GetMapping("/confirmation")

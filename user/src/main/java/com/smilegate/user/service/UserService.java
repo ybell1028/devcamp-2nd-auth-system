@@ -66,6 +66,8 @@ public class UserService {
                 .map(user -> UserVo.builder()
                         .name(user.getName())
                         .email(user.getEmail())
+                        .role(user.getRole().getTitle())
+                        .uuid(user.getUuid())
                         .createdAt(user.getCreatedAt())
                         .modifiedAt(user.getModifiedAt())
                         .build())
@@ -75,6 +77,11 @@ public class UserService {
     @Transactional
     public String findPassword(String encrypted) throws Exception {
         return cryptoUtils.decrypt(encrypted);
+    }
+
+    @Transactional
+    public void deleteByUuid(UUID uuid) {
+        userRepository.deleteByUuid(uuid);
     }
 
     @Transactional

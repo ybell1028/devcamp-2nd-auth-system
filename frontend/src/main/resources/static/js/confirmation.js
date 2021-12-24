@@ -2,8 +2,6 @@ function searchParam(key) {
     return new URLSearchParams(location.search).get(key);
 }
 
-console.log(searchParam("sign"));
-
 $.ajax({
     type: "GET",
     url: "http://localhost:8000/user/confirmation?sign=" + searchParam("sign"),

@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
+    <link rel="shortcut icon" href="#">
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <style>
-    </style>
 </head>
 <body>
 
@@ -14,29 +14,27 @@
         <h2>회원 관리 페이지</h2>
     </div>
 
+    <div id="logout-btn" class="my-2 py-2 align-middle float-right btn btn-secondary">로그아웃</div>
+
     <table id="userTable" class="table table-hover">
         <thead>
         <tr>
-            <th>이메일</th>
-            <th>등급</th>
-            <th>UUID</th>
             <th>이름</th>
+            <th>등급</th>
+            <th>이메일</th>
+            <th>UUID</th>
             <th>생성일자</th>
             <th>수정일자</th>
+            <th>삭제</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="user : ${userList}">
-            <td th:text="${user.email}">email</td>
-            <td th:text="${user.role}">role</td>
-            <td th:text="${user.uuid}">uuid</td>
-            <td th:text="${user.name}">name</td>
-            <td th:text="${user.createdAt}">createdAt</td>
-            <td th:text="${user.modifiedAt}">modifiedAt</td>
-        </tr>
+        <tbody id="userTableBody">
         </tbody>
     </table>
 
-</div> <!-- /container -->
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="/js/admin.js"></script>
 </body>
 </html>
