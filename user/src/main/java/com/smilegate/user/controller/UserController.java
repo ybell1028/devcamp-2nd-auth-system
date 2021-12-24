@@ -1,9 +1,6 @@
 package com.smilegate.user.controller;
 
-import com.smilegate.user.dto.FindPasswordRequest;
-import com.smilegate.user.dto.FindPasswordResponse;
-import com.smilegate.user.dto.RegisterRequest;
-import com.smilegate.user.dto.RegisterResponse;
+import com.smilegate.user.dto.*;
 import com.smilegate.user.entity.User;
 import com.smilegate.user.entity.vo.UserVo;
 import com.smilegate.user.service.ConfirmationService;
@@ -33,8 +30,9 @@ public class UserController {
     }
 
     @GetMapping("/confirmation")
-    public ModelAndView viewConfirmEmail(@Valid @RequestParam UUID sign){
+    public ResponseEntity<?> viewConfirmEmail(@Valid @RequestParam UUID sign){
         userService.confirmEmail(sign);
-        return new ModelAndView("login");
+        UserResponse response = new UserResponse(new ConfirmationResponse(true));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

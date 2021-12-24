@@ -41,7 +41,7 @@ public class ConfirmationService {
 
         // 하드 코딩
         String subject = "회원가입 인증 메일";
-        String link = String.format("<a href=\"http://localhost:8000/auth/confirmation?sign=%s\">----> 링크를 눌러서 인증을 완료해주세요. <----</a>", emailConfirmation.getId());
+        String link = String.format("<a href=\"http://localhost:8090/confirmation/?sign=%s\">----> 링크를 눌러서 인증을 완료해주세요. <----</a>", emailConfirmation.getId());
         this.sendMail(receiver, subject, link);
     }
 
