@@ -1,7 +1,7 @@
-package com.smilegate.auth.config;
+package com.smilegate.user.config;
 
-import com.smilegate.auth.support.AuthError;
-import com.smilegate.auth.support.AuthException;
+import com.smilegate.user.support.UserError;
+import com.smilegate.user.support.UserException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +32,7 @@ public class AsyncConfig implements AsyncConfigurer {
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
         return (ex, method, params) -> {
             log.error("비동기 메서드 ExceptionHandler - '" + method.toGenericString(), ex);
-            throw new AuthException(AuthError.UNKNOWN_ERROR, "비동기 처리 에러입니다.");
+            throw new UserException(UserError.UNKNOWN_ERROR, "비동기 처리 에러입니다.");
         };
     }
 }

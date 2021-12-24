@@ -35,8 +35,4 @@ public class User extends BaseTime {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
-
-    public void modifyRole(Role role) {
-        this.role = role;
-    }
 }

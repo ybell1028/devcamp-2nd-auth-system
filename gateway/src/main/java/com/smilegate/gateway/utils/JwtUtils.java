@@ -19,12 +19,11 @@ import reactor.core.publisher.Mono;
 
 import javax.xml.bind.DatatypeConverter;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
 @Component
-public class JwtUtil {
+public class JwtUtils {
     private static String jwtSecret;
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -53,7 +52,7 @@ public class JwtUtil {
             return String.format("{ \"status\" : \"%s\", \"statusCode\" : \"%s\", \"message\" : \"%s\"" ,
                     gatewayError.getStatus(),
                     gatewayError.getStatus().value(),
-                    gatewayError.getDesc() + " : " + message + " }"
+                    gatewayError.getDesc() + " : " + message + "\" }"
             );
         }
 
@@ -63,7 +62,10 @@ public class JwtUtil {
             log.warn("JwtWebExceptionHandler : " + ex);
 
             String message = "";
-            if (ex.getClass() == ExpiredJwtException.class) {
+            if (ex.getClass() == NullPointerException.class) {
+                message = "x-access-token 헤더가 설정되지 않았습니다.";
+            }
+            else if (ex.getClass() == ExpiredJwtException.class) {
                 message = "만료된 토큰입니다.";
             } else if (ex.getClass() == MalformedJwtException.class ||
                     ex.getClass() == SignatureException.class ||
